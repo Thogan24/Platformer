@@ -442,8 +442,8 @@ MonoBehaviour:
   GroundCheck: {fileID: 1537951110}
   rb: {fileID: 829792154}
   jumpForce: 15
-  gravityScale: 15
-  fallGravityScale: 15
+  gravityScale: 5
+  fallGravityScale: 7
   playerMovementSpeed: 35
   isGrounded: 0
 --- !u!1 &1537951110
@@ -596,8 +596,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103311066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 107.3559, y: -2.3337, z: 0}
-  m_LocalScale: {x: 283.48178, y: 5.667469, z: 1}
+  m_LocalPosition: {x: 17.6241, y: -2.3337, z: 0}
+  m_LocalScale: {x: 89.19066, y: 5.667469, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

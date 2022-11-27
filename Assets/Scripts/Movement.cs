@@ -25,28 +25,30 @@ public class Movement : MonoBehaviour
     void Update()
     {
         Debug.Log(rb.velocity.magnitude);
-        playerMovement.x = Input.GetAxisRaw("Horizontal") * playerMovementSpeed * Time.deltaTime;
 
-        rb.AddForce(Vector2.right * playerMovement, ForceMode2D.Impulse);
+        if (Mathf.Abs(rb.velocity.x) <= 10)
+        {
+            playerMovement.x = Input.GetAxisRaw("Horizontal") * playerMovementSpeed * Time.deltaTime;
+            rb.AddForce(Vector2.right * playerMovement, ForceMode2D.Impulse);
+        }
+        else
+        {
+            Debug.Log("Capped LOL!!!");
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            Debug.Log("ran");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        //if (GroundCheck.GetComponent<Collider2D>().)
-        {
-            Debug.Log("Yeah");
-        }
-        /*if (rb.velocity.y > 0)
+        if (rb.velocity.y > -1)
         {
             rb.gravityScale = gravityScale;
         }
         else
         {
             rb.gravityScale = fallGravityScale;
-        }*/
+        }
     }
 
 }
