@@ -12,8 +12,10 @@ public class Movement : MonoBehaviour
     [SerializeField] float fallGravityScale = 1;
     [SerializeField] float playerMovementSpeed = 1f;
     public bool isGrounded = false;
-    public float lastFrameVelocityY = 0;
+    public float lastFrameVelocityY = 0f;
+    public float lastFrameVelocityYStored = 0f;
     public float direction;
+    public float VelocityYtoVelocityXTimer = 0f;
 
     Vector2 playerMovement;
 
@@ -46,6 +48,12 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            if (VelocityYtoVelocityXTimer > 0f)
+            {
+                Debug.Log("WORKED JUMPED");
+                rb.AddForce(Vector2.right * Mathf.Abs(lastFrameVelocityYStored) * direction * 1f, ForceMode2D.Impulse);
+            }
         }
 
         if (rb.velocity.y > -1)
@@ -60,9 +68,11 @@ public class Movement : MonoBehaviour
         if (isGrounded && -lastFrameVelocityY > 10)
         {
             Debug.Log("WORKED");
-            rb.AddForce(Vector2.right * Mathf.Abs(lastFrameVelocityY) * direction * 0.05f, ForceMode2D.Impulse);
-        }
+            VelocityYtoVelocityXTimer = 0.5f;
+            lastFrameVelocityYStored = lastFrameVelocityY;
+}
         lastFrameVelocityY = rb.velocity.y;
+        VelocityYtoVelocityXTimer -= Time.deltaTime;
     }
 
 }
