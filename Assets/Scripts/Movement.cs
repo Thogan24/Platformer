@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float fallGravityScale = 1;
     [SerializeField] float playerMovementSpeed = 1f;
     public bool isGrounded = false;
+    public float lastFrameVelocityY = 0;
+    public float direction;
 
     Vector2 playerMovement;
 
@@ -24,16 +26,21 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log("Velocity: " + rb.velocity.y);
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            direction = 1f;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            direction = -1f;
+        }
 
-        if (Mathf.Abs(rb.velocity.x) <= 10)
+        if (Mathf.Abs(rb.velocity.x) <= 20)
         {
             playerMovement.x = Input.GetAxisRaw("Horizontal") * playerMovementSpeed * Time.deltaTime;
             rb.AddForce(Vector2.right * playerMovement, ForceMode2D.Impulse);
-        }
-        else
-        {
-            Debug.Log("Capped LOL!!!");
+            //Debug.Log(playerMovement);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -49,6 +56,13 @@ public class Movement : MonoBehaviour
         {
             rb.gravityScale = fallGravityScale;
         }
+
+        if (isGrounded && -lastFrameVelocityY > 10)
+        {
+            Debug.Log("WORKED");
+            rb.AddForce(Vector2.right * Mathf.Abs(lastFrameVelocityY) * direction * 0.05f, ForceMode2D.Impulse);
+        }
+        lastFrameVelocityY = rb.velocity.y;
     }
 
 }
