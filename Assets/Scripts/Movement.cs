@@ -47,6 +47,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            Debug.Log("Jumped");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
             if (VelocityYtoVelocityXTimer > 0f)
