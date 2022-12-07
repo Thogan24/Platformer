@@ -16,6 +16,10 @@ public class Movement : MonoBehaviour
     public float lastFrameVelocityYStored = 0f;
     public float direction;
     public float VelocityYtoVelocityXTimer = 0f;
+    public float afterCayoteTime = 0.5f;
+    public float beforeCayoteTime = 0.5f;
+    public float beforeCayoteTimer = -1f;
+    public float afterCayoteTimer = -1f;
 
     Vector2 playerMovement;
 
@@ -45,7 +49,12 @@ public class Movement : MonoBehaviour
             //Debug.Log(playerMovement);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            beforeCayoteTimer = beforeCayoteTime;
+        }
+
+        if ((isGrounded || afterCayoteTimer >= 0) && beforeCayoteTimer >= 0)
         {
             Debug.Log("Jumped");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -74,6 +83,7 @@ public class Movement : MonoBehaviour
 }
         lastFrameVelocityY = rb.velocity.y;
         VelocityYtoVelocityXTimer -= Time.deltaTime;
+        beforeCayoteTimer -= Time.deltaTime;
     }
 
 }
